@@ -4,7 +4,7 @@
 <meta name="theme-color" content="#050708"><link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
-<title>Coração Branco</title>
+<title>Trilha Coração Branco</title>
 <style>
 :root{--bg:#050708;--c:#111416;--c2:#181B1D;--m:#A5A8AA;--l:#D7FF00;--r:#FF3030;--b:#1D2123}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -72,9 +72,9 @@ const TABS=[['hoje','🏠','Hoje'],['oracao','⏱️','Oração'],['dev','📖',
 function render(){if(!D.start)return boas();
 $('#nav').innerHTML=TABS.map(t=>`<button data-a="tab" data-v="${t[0]}" class="${tab==t[0]||(tab=='trilha'&&t[0]=='hoje')?'on':''}"><i>${t[1]}</i>${t[2]}</button>`).join('');
 $('#m').innerHTML=({hoje,oracao,dev,diario,perfil,trilha})[tab]();paint()}
-const top=t=>`<div class="top"><span class="brand">${t}</span><button class="sos" data-a="sos">SOS</button></div>`;
+const hdr=t=>`<div class="top"><span class="brand">${t}</span><button class="sos" data-a="sos">SOS</button></div>`;
 function hoje(){const t=today(),en=D.e[t],st=stats(),d=dia(),w=sem(),v=V[(d-1)%V.length];
-return top('♡ Coração Branco')+`<div class="lime">Dia ${String(d).padStart(2,'0')} de 168 · <a data-a="tab" data-v="trilha">ver trilha</a></div>
+return hdr('♡ Trilha Coração Branco')+`<div class="lime">Dia ${String(d).padStart(2,'0')} de 168 · <a data-a="tab" data-v="trilha">ver trilha</a></div>
 <h1>Semana ${w}.<br><span class="lime">${TEMAS[w-1]}.</span></h1>
 <div class="row"><div class="stat"><small>🔥 Sequência atual</small><b>${st.cur} dia${st.cur==1?'':'s'}</b></div><div class="stat"><small>🏆 Melhor sequência</small><b>${st.best} dia${st.best==1?'':'s'}</b></div></div>
 <div class="card" data-a="tab" data-v="dev"><small>Ensinamento do dia ›</small><h3>${DEV[d]?DEV[d].t:dflt.t}</h3><span class="m">Toque para ler o devocional de hoje.</span></div>
@@ -82,9 +82,9 @@ return top('♡ Coração Branco')+`<div class="lime">Dia ${String(d).padStart(2
 ${en&&!alt?`<div class="card"><b class="lime">${en.s=='v'?'✔ Hoje você resistiu':'✖ Hoje você recaiu'}</b><p class="m">${en.s=='v'?'Continue firme.':'Uma queda não define a sua história. Levante-se e continue.'}</p><a data-a="alt">Alterar registro</a></div>`
 :`<div class="row"><button class="btn" data-a="reg" data-v="v">✔ RESISTI<br><small style="color:#253000">Estou firme!</small></button><button class="btn r" data-a="reg" data-v="r">✖ RECAÍ<br><small style="color:#ffe2e2">Preciso me levantar!</small></button></div>`}
 <div class="card"><small>Como foi seu dia? (opcional)</small><textarea id="nota" maxlength="200" placeholder="Escreva uma nota rápida..." data-i="nota">${esc(en?en.n:draft)}</textarea><small id="cnt">${(en?en.n:draft).length}/200</small></div>`}
-function trilha(){const w=sem();return top('Trilha')+`<p class="m">Sua jornada de 168 dias · 24 semanas</p>`+TEMAS.map((x,i)=>`<div class="path" style="margin-left:${[0,28,56,28][i%4]}px"><div class="node ${i+1<w?'d':i+1==w?'c':''}">${i+1<w?'✔':i+1}</div><div><b>${x}</b><br><small>${i+1<w?'Concluída':i+1==w?'Semana atual':'Futura'}</small></div></div>`).join('')+`<a data-a="tab" data-v="hoje">‹ voltar</a>`}
+function trilha(){const w=sem();return hdr('Trilha')+`<p class="m">Sua jornada de 168 dias · 24 semanas</p>`+TEMAS.map((x,i)=>`<div class="path" style="margin-left:${[0,28,56,28][i%4]}px"><div class="node ${i+1<w?'d':i+1==w?'c':''}">${i+1<w?'✔':i+1}</div><div><b>${x}</b><br><small>${i+1<w?'Concluída':i+1==w?'Semana atual':'Futura'}</small></div></div>`).join('')+`<a data-a="tab" data-v="hoje">‹ voltar</a>`}
 function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
-function oracao(){return top('Oração · Tempo com Deus')+`<p class="m" style="text-align:center">Escolha o tempo</p><div class="row">${[10,15,20].map(m=>`<button class="btn ${T.m==m?'':'g'}" data-a="min" data-v="${m}" ${T.run?'disabled':''}>${m} min</button>`).join('')}</div>
+function oracao(){return hdr('Oração · Tempo com Deus')+`<p class="m" style="text-align:center">Escolha o tempo</p><div class="row">${[10,15,20].map(m=>`<button class="btn ${T.m==m?'':'g'}" data-a="min" data-v="${m}" ${T.run?'disabled':''}>${m} min</button>`).join('')}</div>
 <div style="position:relative;width:260px;height:260px;margin:24px auto"><svg width="260" height="260" viewBox="0 0 260 260" style="transform:rotate(-90deg)"><circle cx="130" cy="130" r="105" fill="none" stroke="#252A2C" stroke-width="14"/><circle id="rg" cx="130" cy="130" r="105" fill="none" stroke="#D7FF00" stroke-width="14" stroke-linecap="round" stroke-dasharray="660" stroke-dashoffset="0"/></svg>
 <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="big" id="tm">${fmt(T.left)}</div><small>Tempo restante</small><button class="btn g" style="width:56px;height:56px;border-radius:50%;margin-top:10px;padding:0;font-size:20px" data-a="${T.run?'pause':'play'}">${T.run?'❚❚':'▶'}</button></div></div>
 <p class="m" style="text-align:center">“Buscai o Senhor enquanto se pode achar, invocai-o enquanto está perto.”<br><span class="lime">Isaías 55:6</span></p>
@@ -96,25 +96,25 @@ async function play(){T.end=Date.now()+T.left*1000;T.run=true;clearInterval(T.id
 function stop(){T.run=false;clearInterval(T.id);try{T.wl&&T.wl.release()}catch(e){}}
 function fim(){stop();const t=today();D.pr[t]=(D.pr[t]||0)+T.m;save();T.left=T.m*60;try{navigator.vibrate([300,150,300])}catch(e){}render();sheet(`<h3>Oração concluída 🙏</h3><p class="m">Seu tempo com Deus chegou ao fim. Que a paz dele guarde o seu coração.</p><button class="btn" data-a="close">Amém</button>`)}
 function dev(){const d=devDay||(devDay=dia()),x=DEV[d]||dflt,v=V[(d-1)%V.length];
-return top(`Dia ${d} · ${TEMAS[Math.ceil(d/7)-1]}`)+`<div class="row" style="align-items:center"><button class="chip" data-a="dp">‹</button><div style="flex:1;height:6px;background:#252A2C;border-radius:4px"><div style="width:${d/168*100}%;height:6px;background:var(--l);border-radius:4px"></div></div><button class="chip" data-a="dn">›</button><button class="chip" data-a="fs">Aa</button><button class="chip" data-a="spk">${spk?'■':'▶'}</button></div>
+return hdr(`Dia ${d} · ${TEMAS[Math.ceil(d/7)-1]}`)+`<div class="row" style="align-items:center"><button class="chip" data-a="dp">‹</button><div style="flex:1;height:6px;background:#252A2C;border-radius:4px"><div style="width:${d/168*100}%;height:6px;background:var(--l);border-radius:4px"></div></div><button class="chip" data-a="dn">›</button><button class="chip" data-a="fs">Aa</button><button class="chip" data-a="spk">${spk?'■':'▶'}</button></div>
 <div class="card"><h2>${x.t}</h2><p class="lime" style="font-family:Georgia,serif;font-style:italic;font-size:19px">${v[0]} – ${v[1]}</p>${x.tx.split('\n\n').map(p=>`<p style="font-size:${D.fs}px;line-height:1.55">${p}</p>`).join('')}
 <div class="row"><button class="chip" data-a="fav">${D.fav[d]?'♥':'♡'} Favoritar</button><button class="chip" data-a="share">Compartilhar</button></div></div>
 <div class="card"><b class="lime">🙏 Oração</b><p class="m">${x.or}</p></div><div class="card"><b class="lime">🎯 Desafio do dia</b><p class="m">${x.ds}</p></div>`}
 function diario(){const ks=Object.keys(D.e).sort().reverse().filter(k=>filt=='all'||D.e[k].s==filt);
-return top('Diário')+`<p class="m">Histórico completo</p><div class="row">${[['all','Todos'],['v','Vitória'],['r','Recaída']].map(f=>`<button class="chip ${filt==f[0]?'on':''}" data-a="filt" data-v="${f[0]}">${f[1]}</button>`).join('')}</div>`+
+return hdr('Diário')+`<p class="m">Histórico completo</p><div class="row">${[['all','Todos'],['v','Vitória'],['r','Recaída']].map(f=>`<button class="chip ${filt==f[0]?'on':''}" data-a="filt" data-v="${f[0]}">${f[1]}</button>`).join('')}</div>`+
 (ks.length?ks.map(k=>{const e=D.e[k],c=e.s=='v'?'var(--l)':'var(--r)';return `<div class="ent"><small>Dia ${dd(D.start,k)+1}<br>${k.slice(8)}/${k.slice(5,7)}</small><div class="ic" style="border-color:${c};color:${c}">${e.s=='v'?'✔':'✖'}</div><div style="flex:1"><b style="color:${c}">${e.s=='v'?'Resisti':'Recaí'}</b><br><small>${esc(e.n||'Sem nota')}</small></div></div>`}).join(''):'<p class="m">Nenhum registro ainda.</p>')}
 function perfil(){const s=stats(),el=dd(D.start,today())+1,n=new Date(),y=n.getFullYear(),mo=n.getMonth(),nd=new Date(y,mo+1,0).getDate(),off=new Date(y,mo,1).getDay();
 let cal='<div class="cal">'+'<div style="background:0"></div>'.repeat(off);
 for(let i=1;i<=nd;i++){const k=iso(new Date(y,mo,i)),e=D.e[k];cal+=`<div class="${e?e.s:''} ${k==today()?'t':''}">${i}</div>`}cal+='</div>';
-return top('Perfil')+`<p class="m">Sua evolução</p><div class="row"><div class="stat"><small>Dias de vitória</small><b>${s.vit}</b></div><div class="stat"><small>Maior sequência</small><b>${s.best} dias</b></div><div class="stat"><small>Consistência</small><b>${Math.round(s.vit/Math.max(1,el)*100)}%</b></div></div>
+return hdr('Perfil')+`<p class="m">Sua evolução</p><div class="row"><div class="stat"><small>Dias de vitória</small><b>${s.vit}</b></div><div class="stat"><small>Maior sequência</small><b>${s.best} dias</b></div><div class="stat"><small>Consistência</small><b>${Math.round(s.vit/Math.max(1,el)*100)}%</b></div></div>
 <h3>Marcos conquistados</h3><div class="row" style="justify-content:space-between">${[7,14,30,60,90].map(d=>`<div style="text-align:center"><div class="mk ${s.best>=d?'on':''}">${s.best>=d?'⭐':'🔒'}</div><small>${d} dias</small></div>`).join('')}</div>
 <div class="card"><h3>Resumo geral</h3><small>Dias registrados: ${s.tot} de 168<br>Vitórias: ${s.vit}<br>Recaídas: ${s.rec}<br>Dias em branco: ${Math.max(0,el-s.tot)}</small></div>
 <h3>${n.toLocaleString('pt-BR',{month:'long',year:'numeric'})}</h3>${cal}
 <div class="card"><h3>Configurações</h3><small>Contato de confiança (WhatsApp, com DDD)</small><input id="ct" type="tel" inputmode="tel" placeholder="(61) 99999-9999" value="${esc(D.contact)}"><button class="btn g" style="margin-top:8px" data-a="sct">Salvar contato</button>
 <button class="btn g" style="margin-top:8px" data-a="pin">${D.pin?'Alterar/remover PIN':'Definir PIN de proteção'}</button><button class="btn g" style="margin-top:8px" data-a="exp">Exportar backup</button><button class="btn g" style="margin-top:8px" data-a="imp">Importar backup</button><input id="fi" type="file" accept=".json" hidden></div>
 <button class="btn g" style="border:1px solid var(--r);color:var(--r);background:0" data-a="rst">↻ Reiniciar jornada</button><p class="m" style="text-align:center">Seus dados ficam só neste aparelho.</p>`}
-function boas(){$('#nav').innerHTML='';$('#m').innerHTML='';sheet(`<h2>Bem-vindo ao Coração Branco</h2><p class="m">Uma jornada de 168 dias, com verdade, oração e graça. Tudo fica salvo só no seu aparelho.</p><small>Contato de confiança (WhatsApp, opcional)</small><input id="ct" type="tel" inputmode="tel" placeholder="(61) 99999-9999"><button class="btn" style="margin-top:14px" data-a="go">Começar jornada</button>`)}
-function lock(){sheet(`<h2>Coração Branco</h2><small>Digite seu PIN</small><input id="pn" type="password" inputmode="numeric" maxlength="6"><p class="m" id="er" style="color:var(--r)"></p><button class="btn" data-a="unl">Entrar</button>`)}
+function boas(){$('#nav').innerHTML='';$('#m').innerHTML='';sheet(`<h2>Bem-vindo à Trilha Coração Branco</h2><p class="m">Uma jornada de 168 dias, com verdade, oração e graça. Tudo fica salvo só no seu aparelho.</p><small>Contato de confiança (WhatsApp, opcional)</small><input id="ct" type="tel" inputmode="tel" placeholder="(61) 99999-9999"><button class="btn" style="margin-top:14px" data-a="go">Começar jornada</button>`)}
+function lock(){sheet(`<h2>Trilha Coração Branco</h2><small>Digite seu PIN</small><input id="pn" type="password" inputmode="numeric" maxlength="6"><p class="m" id="er" style="color:var(--r)"></p><button class="btn" data-a="unl">Entrar</button>`)}
 function sos(){const n=D.contact.replace(/\D/g,''),f=n.length<=11?'55'+n:n;
 sheet(`<div style="text-align:right"><a data-a="close">✕ fechar</a></div><h2>Precisa de ajuda agora?</h2><p class="m">Você não está sozinho.</p>
 ${[['1.','Pare e respire fundo','Inspire por 4s, segure 4s, expire 4s.'],['2.','Saia do ambiente','Afaste-se do que está te provocando.'],['3.','Ore com sinceridade','Fale com Deus. Ele te ouve agora.'],['4.','Fale com alguém','Envie uma mensagem para seu contato.'],['5.','Escolha o bem','Lembre-se: isso vai passar.']].map(x=>`<div class="step"><b class="lime">${x[0]}</b><div><b>${x[1]}</b><br><small>${x[2]}</small></div></div>`).join('')}
@@ -134,7 +134,7 @@ case'min':T.m=+v;T.left=T.m*60;render();break;case'play':play();break;case'pause
 case'orar':closeS();tab='oracao';render();break;case'goperfil':closeS();tab='perfil';render();break;
 case'dp':devDay=Math.max(1,devDay-1);render();break;case'dn':devDay=Math.min(dia(),devDay+1);render();break;
 case'fs':D.fs=D.fs>=23?16:D.fs+2;save();render();break;case'fav':D.fav[devDay]=!D.fav[devDay];save();render();break;
-case'share':{const x=DEV[devDay]||dflt,m=x.t+' – Coração Branco';try{navigator.share?await navigator.share({title:m,text:m+'\n'+x.tx}):alert('Compartilhamento não disponível.')}catch(_){}}break;
+case'share':{const x=DEV[devDay]||dflt,m=x.t+' – Trilha Coração Branco';try{navigator.share?await navigator.share({title:m,text:m+'\n'+x.tx}):alert('Compartilhamento não disponível.')}catch(_){}}break;
 case'spk':if(spk){speechSynthesis.cancel();spk=false}else{const x=DEV[devDay]||dflt,u=new SpeechSynthesisUtterance(x.t+'. '+x.tx);u.lang='pt-BR';u.onend=()=>{spk=false;render()};speechSynthesis.speak(u);spk=true}render();break;
 case'filt':filt=v;render();break;
 case'sct':D.contact=$('#ct').value.trim();save();alert('Contato salvo.');break;
@@ -142,7 +142,7 @@ case'go':D.start=today();D.contact=$('#ct').value.trim();save();closeS();render(
 case'pin':sheet(`<h3>PIN de proteção</h3><small>4 a 6 números. Deixe vazio para remover.</small><input id="pn" type="password" inputmode="numeric" maxlength="6"><button class="btn" style="margin-top:12px" data-a="spin">Salvar</button><button class="btn g" style="margin-top:8px" data-a="close">Cancelar</button>`);break;
 case'spin':{const p=$('#pn').value;if(p&&!/^\d{4,6}$/.test(p))return alert('Use de 4 a 6 números.');D.pin=p?await sha(p):'';save();closeS();render()}break;
 case'unl':if(await sha($('#pn').value)==D.pin){closeS();render()}else $('#er').textContent='PIN incorreto.';break;
-case'exp':{const b=new Blob([JSON.stringify(D)],{type:'application/json'}),l=document.createElement('a');l.href=URL.createObjectURL(b);l.download='coracao-branco-backup.json';l.click()}break;
+case'exp':{const b=new Blob([JSON.stringify(D)],{type:'application/json'}),l=document.createElement('a');l.href=URL.createObjectURL(b);l.download='trilha-coracao-branco-backup.json';l.click()}break;
 case'imp':$('#fi').click();break;
 case'rst':sheet(`<h3>Reiniciar jornada</h3><p class="m">A contagem volta ao dia 1. Escolha o que fazer com o histórico.</p><button class="btn" data-a="rk">Reiniciar e manter histórico</button><button class="btn r" style="margin-top:8px" data-a="ra">Reiniciar e apagar tudo</button><button class="btn g" style="margin-top:8px" data-a="close">Cancelar</button>`);break;
 case'rk':D.start=today();save();closeS();tab='hoje';render();break;
